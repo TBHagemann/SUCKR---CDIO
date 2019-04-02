@@ -28,6 +28,7 @@ public class SensorController implements ISensorController{
 
 	public float getDistance() {
 		return ultrasonic.distance();
+		
 	}
 	
 }
