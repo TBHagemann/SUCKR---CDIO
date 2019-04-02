@@ -16,33 +16,21 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		//movementTest();
-		gyroTest();
+		movementTest();
+		//gyroTest();
 	}
 	
 	public static void movementTest() {
-		Sound.playTone(500, 800);
-
-		MovementController mc = new MovementController();
-
-		mc.frontCollectorOn();
-		mc.driveCar(5000);
-
-		//mc.turnRight(true);
-		Delay.msDelay(2000);
-
-		mc.frontCollectorOff();
-		mc.stopCar();
-
-		mc.openTrunk();
-		mc.closeTrunk();
+		IMovementController mc = new MovementController();
+		
+		for(int i = 0; i < 4; i++) {
+			mc.driveCarUntillCloseToWall((float) 0.2);
+			mc.turnLeft(90);
+		}
 	}
 	
 	public static void gyroTest() {
-		
 		IMovementController mc = ControllerRegistry.getMovementController();
-		
-		mc.turnRight(180);		
-		
+		mc.turnRight(180);				
 	}
 }

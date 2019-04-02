@@ -45,11 +45,24 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void driveCar(int time) {
+		
 		motorOn("left");
 		motorOn("right");
 		
 		if(time != 0) {
 			Delay.msDelay(time);
+		}
+		
+	}
+	
+	public void driveCarUntillCloseToWall(float distance) {
+		wheel1.setPower(100);
+		wheel2.setPower(100);
+		motorOn("left");
+		motorOn("right");
+		
+		while(getDistance() > distance) {
+			
 		}
 		
 	}
@@ -67,7 +80,6 @@ public class MovementController implements IMovementController{
 		case "left": 
 			wheel1.backward();
 			break;
-			
 		case "right":
 			wheel2.backward();
 			break;
@@ -143,4 +155,5 @@ public class MovementController implements IMovementController{
 	public float getDistance() {
 		return sc.getDistance();
 	}
+
 }

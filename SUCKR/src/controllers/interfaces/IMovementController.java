@@ -3,6 +3,7 @@ package controllers.interfaces;
 public interface IMovementController {
 	
 	public void driveCar(int time);
+	public void driveCarUntillCloseToWall(float distance);
 	public void stopCar();
 	public void motorOn(String motor);
 	public void motorOff(String motor);
