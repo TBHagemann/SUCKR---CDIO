@@ -1,6 +1,8 @@
 package controllers.impl;
 
+import controllers.ControllerRegistry;
 import controllers.interfaces.IMovementController;
+import controllers.interfaces.ISensorController;
 import entities.sensors.Gyro;
 import entities.sensors.Ultrasonic;
 import lejos.*;
@@ -14,12 +16,8 @@ import lejos.utility.Delay;
 public class MovementController implements IMovementController{
 	
 	
-	UnregulatedMotor wheel1, wheel2, trunk, collector;
-	EV3UltrasonicSensor usensor;
-	Ultrasonic ultrasonic;
-	EV3GyroSensor gsensor;
-	Gyro gyro;
-	
+	UnregulatedMotor wheel1, wheel2, trunk, collector;	
+	ISensorController sc;
 
 	public MovementController(){
 		wheel1 = new UnregulatedMotor(MotorPort.B);
@@ -27,6 +25,8 @@ public class MovementController implements IMovementController{
 		
 		trunk = new UnregulatedMotor(MotorPort.A);
 		collector = new UnregulatedMotor(MotorPort.D);
+		
+		sc = ControllerRegistry.getSensorController();
 		
 		/*
 		usensor = new EV3UltrasonicSensor(SensorPort.S3);
@@ -36,10 +36,12 @@ public class MovementController implements IMovementController{
 		gyro = new Gyro(gsensor.getMode("Angle"));
 		*/
 		
+		/*
 		wheel1.setPower(100);
 		wheel2.setPower(100);
 		collector.setPower(100);
 		trunk.setPower(100);
+		*/
 	}
 	
 	public void driveCar(int time) {
@@ -104,35 +106,37 @@ public class MovementController implements IMovementController{
 		Delay.msDelay(1000);
 	}
 	
-	public void turnRight(boolean continueDriving) {
+	public void turnRight(int degrees) {
 		wheel2.stop();
 		wheel1.stop();
 		
-		wheel2.backward();
 		
-		Delay.msDelay(1000);
-		
-		wheel1.stop();
-		
-		if(continueDriving) {
-			wheel1.backward();
+		int startAngle = sc.getGyroAngle();
+		int endAngle = startAngle;
+		while(Math.abs(startAngle - endAngle) < degrees) {
+			wheel2.setPower(100);
 			wheel2.backward();
+			
+			endAngle = sc.getGyroAngle();		
 		}
+		
+		wheel2.stop();
 	}
 	
-	public void turnLeft(boolean continueDriving) {
+	public void turnLeft(int degrees) {
 		wheel2.stop();
 		wheel1.stop();
 		
-		wheel1.backward();
 		
-		Delay.msDelay(1000);
+		int startAngle = sc.getGyroAngle();
+		int endAngle = startAngle;
+		while(Math.abs(startAngle - endAngle) < degrees) {
+			wheel1.setPower(100);
+			wheel1.backward();
+			
+			endAngle = sc.getGyroAngle();		
+		}
 		
 		wheel1.stop();
-		
-		if(continueDriving) {
-			wheel1.backward();
-			wheel2.backward();
-		}
 	}
 }

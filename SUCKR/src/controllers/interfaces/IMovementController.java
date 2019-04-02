@@ -10,7 +10,7 @@ public interface IMovementController {
 	public void frontCollectorOff();
 	public void openTrunk();
 	public void closeTrunk();
-	public void turnRight(boolean continueDriving);
-	public void turnLeft(boolean continueDriving);
+	public void turnRight(int degrees);
+	public void turnLeft(int degrees);
 
 }

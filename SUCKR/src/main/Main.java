@@ -1,6 +1,9 @@
 package main;
 
+import controllers.ControllerRegistry;
 import controllers.impl.MovementController;
+import controllers.interfaces.IMovementController;
+import entities.sensors.Gyro;
 import lejos.*;
 import lejos.hardware.Sound;
 import lejos.hardware.motor.UnregulatedMotor;
@@ -13,8 +16,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		movementTest();
-		
+		//movementTest();
+		gyroTest();
 	}
 	
 	public static void movementTest() {
@@ -25,7 +28,7 @@ public class Main {
 		mc.frontCollectorOn();
 		mc.driveCar(5000);
 
-		mc.turnRight(true);
+		//mc.turnRight(true);
 		Delay.msDelay(2000);
 
 		mc.frontCollectorOff();
@@ -33,5 +36,13 @@ public class Main {
 
 		mc.openTrunk();
 		mc.closeTrunk();
+	}
+	
+	public static void gyroTest() {
+		
+		IMovementController mc = ControllerRegistry.getMovementController();
+		
+		mc.turnRight(180);		
+		
 	}
 }
