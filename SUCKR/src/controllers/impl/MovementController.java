@@ -139,4 +139,8 @@ public class MovementController implements IMovementController{
 		
 		wheel1.stop();
 	}
+	
+	public float getDistance() {
+		return sc.getDistance();
+	}
 }
