@@ -2,7 +2,7 @@ package controllers.interfaces;
 
 public interface IMovementController {
 	
-	public void driveCar(int time);
+	public void driveCar(int time, int power);
 	public void stopCar();
 	public void motorOn(String motor);
 	public void motorOff(String motor);
@@ -12,5 +12,6 @@ public interface IMovementController {
 	public void closeTrunk();
 	public void turnRight(int degrees);
 	public void turnLeft(int degrees);
+	public boolean isDriving();
 
 }
