@@ -26,4 +26,8 @@ public class SensorController implements ISensorController{
 		return gyro.angle();
 	}
 
+	public float getDistance() {
+		return ultrasonic.distance();
+	}
+	
 }
