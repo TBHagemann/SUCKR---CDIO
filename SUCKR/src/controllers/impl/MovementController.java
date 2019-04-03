@@ -162,4 +162,37 @@ public class MovementController implements IMovementController{
 	public boolean isDriving() {
 		return true;
 	}
+	
+	public void zigZag(int degrees) {
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.backward();
+		wheel1.backward();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.backward();
+		wheel1.backward();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.backward();
+		wheel1.backward();
+		
+	}
+	
+	public void driveBackwards(int time) {
+		wheel2.forward();
+		wheel1.forward();
+	}
+	
+	public void parallelPark() {
+		wheel2.stop();
+		wheel1.stop();
+		driveCar(500, 100);
+		turnLeft(180);
+		wheel1.backward();
+		wheel2.backward();
+		openTrunk();
+	}
 }
