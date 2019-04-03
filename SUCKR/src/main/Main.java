@@ -17,31 +17,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-<<<<<<< HEAD
 		//movementTest();
 		//gyroTest();
 		runTest();
-	}
-	
-	public static void movementTest() {
-		Sound.playTone(500, 800);
-
-		MovementController mc = new MovementController();
-
-		mc.frontCollectorOn();
-		mc.driveCar(5000,100);
-
-		//mc.turnRight(true);
-		Delay.msDelay(2000);
-
-		mc.frontCollectorOff();
-		mc.stopCar();
-
-		mc.openTrunk();
-		mc.closeTrunk();
-=======
-		movementTest();
-		//gyroTest();
 	}
 	
 	public static void movementTest() {
@@ -51,7 +29,6 @@ public class Main {
 			mc.driveCarUntillCloseToWall((float) 0.2);
 			mc.turnLeft(90);
 		}
->>>>>>> 35ffa7cd1b80362433fc6d23f1671273de78e022
 	}
 	
 	public static void gyroTest() {
