@@ -184,19 +184,33 @@ public class MovementController implements IMovementController{
 		wheel1.backward();
 		
 	}
-	
+	/*
 	public void driveBackwards(int time) {
 		wheel2.forward();
 		wheel1.forward();
 	}
+	*/
+	
+	
+	public void driveBackwards(int time, int power) {
+		wheel1.setPower(power);
+		wheel2.setPower(power);
+		
+		wheel1.forward();
+		wheel2.forward();
+		
+		if(time != 0) {
+			Delay.msDelay(time);
+		}
+	}
+	
 	
 	public void parallelPark() {
 		wheel2.stop();
 		wheel1.stop();
 		driveCar(500, 100);
 		turnLeft(180);
-		wheel1.backward();
-		wheel2.backward();
+		driveBackwards(500, 100);
 		openTrunk();
 	}
 }

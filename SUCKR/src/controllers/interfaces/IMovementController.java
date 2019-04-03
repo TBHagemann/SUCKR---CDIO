@@ -14,5 +14,7 @@ public interface IMovementController {
 	public void turnRight(int degrees);
 	public void turnLeft(int degrees);
 	public boolean isDriving();
+	public void parallelPark();
+	public void driveBackwards(int time, int power);
 
 }
