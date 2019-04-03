@@ -17,6 +17,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+<<<<<<< HEAD
 		//movementTest();
 		//gyroTest();
 		runTest();
@@ -38,14 +39,24 @@ public class Main {
 
 		mc.openTrunk();
 		mc.closeTrunk();
+=======
+		movementTest();
+		//gyroTest();
+	}
+	
+	public static void movementTest() {
+		IMovementController mc = new MovementController();
+		
+		for(int i = 0; i < 4; i++) {
+			mc.driveCarUntillCloseToWall((float) 0.2);
+			mc.turnLeft(90);
+		}
+>>>>>>> 35ffa7cd1b80362433fc6d23f1671273de78e022
 	}
 	
 	public static void gyroTest() {
-		
 		IMovementController mc = ControllerRegistry.getMovementController();
-		
-		mc.turnRight(180);		
-		
+		mc.turnRight(180);				
 	}
 	
 	public static void runTest() {

@@ -52,6 +52,18 @@ public class MovementController implements IMovementController{
 		
 	}
 	
+	public void driveCarUntillCloseToWall(float distance) {
+		wheel1.setPower(100);
+		wheel2.setPower(100);
+		motorOn("left");
+		motorOn("right");
+		
+		while(getDistance() > distance) {
+			
+		}
+		
+	}
+	
 	public void stopCar() {
 		motorOff("left");
 		motorOff("right");
@@ -65,7 +77,6 @@ public class MovementController implements IMovementController{
 		case "left": 
 			wheel1.backward();
 			break;
-			
 		case "right":
 			wheel2.backward();
 			break;
