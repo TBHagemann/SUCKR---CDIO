@@ -27,6 +27,8 @@ public class Main {
 			mc.driveCarUntillCloseToWall((float) 0.2);
 			mc.turnLeft(90);
 		}
+		
+		//mc.turnLeft(100000);
 	}
 
 	public static void gyroTest() {

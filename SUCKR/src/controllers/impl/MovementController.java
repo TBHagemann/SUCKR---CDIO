@@ -35,8 +35,6 @@ public class MovementController implements IMovementController{
 		gsensor = new EV3GyroSensor(SensorPort.S2);
 		gyro = new Gyro(gsensor.getMode("Angle"));
 		*/
-		
-
 	}
 	
 	public void driveCar(int time, int power) {
@@ -71,7 +69,7 @@ public class MovementController implements IMovementController{
 	
 	public void motorOn(String motor) {
 		
-		motor.toLowerCase();
+		motor = motor.toLowerCase();
 		
 		switch(motor) {
 		case "left": 
@@ -121,16 +119,21 @@ public class MovementController implements IMovementController{
 		wheel2.stop();
 		wheel1.stop();
 		
+		wheel1.setPower(100);
+		wheel2.setPower(100);
+		
 		
 		int startAngle = sc.getGyroAngle();
 		int endAngle = startAngle;
 		while(Math.abs(startAngle - endAngle) < degrees) {
-			wheel2.setPower(100);
+			
+			wheel1.forward();
 			wheel2.backward();
 			
 			endAngle = sc.getGyroAngle();		
 		}
 		
+		wheel1.stop();
 		wheel2.stop();
 	}
 	
@@ -153,6 +156,7 @@ public class MovementController implements IMovementController{
 		}
 		
 		wheel1.stop();
+		wheel2.stop();
 	}
 	
 	public float getDistance() {
