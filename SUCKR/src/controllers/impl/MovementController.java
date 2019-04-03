@@ -36,15 +36,12 @@ public class MovementController implements IMovementController{
 		gyro = new Gyro(gsensor.getMode("Angle"));
 		*/
 		
-		/*
-		wheel1.setPower(100);
-		wheel2.setPower(100);
-		collector.setPower(100);
-		trunk.setPower(100);
-		*/
+
 	}
 	
-	public void driveCar(int time) {
+	public void driveCar(int time, int power) {
+		wheel1.setPower(power);
+		wheel2.setPower(power);
 		
 		motorOn("left");
 		motorOn("right");
@@ -101,6 +98,7 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void frontCollectorOn() {
+		collector.setPower(100);
 		collector.backward();
 	}
 	
@@ -109,8 +107,9 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void openTrunk() {
+		trunk.setPower(100);
 		trunk.backward();
-		Delay.msDelay(1000);
+		Delay.msDelay(1000);	
 	}
 	
 	public void closeTrunk() {
@@ -159,5 +158,8 @@ public class MovementController implements IMovementController{
 	public float getDistance() {
 		return sc.getDistance();
 	}
-
+	
+	public boolean isDriving() {
+		return true;
+	}
 }
