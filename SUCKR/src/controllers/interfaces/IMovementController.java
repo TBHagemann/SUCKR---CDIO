@@ -16,5 +16,6 @@ public interface IMovementController {
 	public boolean isDriving();
 	public void parallelPark();
 	public void driveBackwards(int time, int power);
+	public void playSound();
 
 }

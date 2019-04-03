@@ -1,11 +1,14 @@
 package controllers.impl;
 
+import java.io.File;
+
 import controllers.ControllerRegistry;
 import controllers.interfaces.IMovementController;
 import controllers.interfaces.ISensorController;
 import entities.sensors.Gyro;
 import entities.sensors.Ultrasonic;
 import lejos.*;
+import lejos.hardware.Sound;
 import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
@@ -18,6 +21,8 @@ public class MovementController implements IMovementController{
 	
 	UnregulatedMotor wheel1, wheel2, trunk, collector;	
 	ISensorController sc;
+	
+	File PKMON = new File("sjovtklip.wav");
 
 	public MovementController(){
 		wheel1 = new UnregulatedMotor(MotorPort.B);
@@ -212,5 +217,9 @@ public class MovementController implements IMovementController{
 		turnLeft(180);
 		driveBackwards(500, 100);
 		openTrunk();
+	}
+	
+	public void playSound() {
+		Sound.playSample(PKMON);
 	}
 }

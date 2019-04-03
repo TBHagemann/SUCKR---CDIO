@@ -23,11 +23,12 @@ public class Main {
 
 	public static void movementTest() {
 		IMovementController mc = new MovementController();
-		for(int i = 0; i < 4; i++) {
-			mc.driveCarUntillCloseToWall((float) 0.2);
-			mc.turnLeft(90);
-		}
-		
+		mc.playSound();
+//		for(int i = 0; i < 4; i++) {
+//			mc.driveCarUntillCloseToWall((float) 0.2);
+//			mc.turnLeft(90);
+//		}
+//		
 		//mc.turnLeft(100000);
 	}
 
