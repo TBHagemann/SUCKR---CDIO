@@ -4,6 +4,7 @@ import controllers.ControllerRegistry;
 import controllers.impl.MovementController;
 import controllers.interfaces.IMovementController;
 import controllers.interfaces.ISensorController;
+import controllers.interfaces.ISocketController;
 import entities.sensors.Gyro;
 import lejos.*;
 import lejos.hardware.Sound;
@@ -17,7 +18,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		movementTest();
+		//movementTest();
+		SocketTest();
 
 	}
 
@@ -59,5 +61,10 @@ public class Main {
 		}
 		mc.driveCar(0,100);
 		}
+	}
+	
+	public static void SocketTest() {
+		ISocketController isc = ControllerRegistry.getSocketController();
+		isc.sendData("127.0.0.1", 30);
 	}
 }
