@@ -1,6 +1,12 @@
 package main;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import controllers.ControllerRegistry;
+import controllers.impl.DataOutputStream;
 import controllers.impl.MovementController;
 import controllers.interfaces.IMovementController;
 import controllers.interfaces.ISensorController;
@@ -18,8 +24,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		InputStream in = null;
 		//movementTest();
-		SocketTest();
 
 	}
 
@@ -65,6 +71,32 @@ public class Main {
 	
 	public static void SocketTest() {
 		ISocketController isc = ControllerRegistry.getSocketController();
-		isc.sendData("127.0.0.1", 30);
+		isc.sendData("127.0.0.1", 3000);
+	}
+	
+	public static void sendData(int b) {
+		OutputStream out = null;
+		DataOutputStream op = new DataOutputStream(out);
+		
+		try {
+			op.write(b);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static int receiveData() {
+		int received = 0;
+		InputStream in = null;
+		DataInputStream ip = new DataInputStream(in);
+		
+		try {
+			received = ip.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return received;
 	}
 }
