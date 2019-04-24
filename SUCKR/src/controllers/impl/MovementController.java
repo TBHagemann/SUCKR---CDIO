@@ -31,7 +31,7 @@ public class MovementController implements IMovementController{
 		trunk = new UnregulatedMotor(MotorPort.A);
 		collector = new UnregulatedMotor(MotorPort.D);
 		
-		sc = ControllerRegistry.getSensorController();
+		//sc = ControllerRegistry.getSensorController();
 		
 		/*
 		usensor = new EV3UltrasonicSensor(SensorPort.S3);
@@ -110,7 +110,7 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void openTrunk() {
-		trunk.setPower(100);
+		trunk.setPower(50);
 		trunk.backward();
 		Delay.msDelay(1000);	
 	}
@@ -136,6 +136,7 @@ public class MovementController implements IMovementController{
 			wheel2.backward();
 			
 			endAngle = sc.getGyroAngle();		
+
 		}
 		
 		wheel1.stop();
@@ -189,6 +190,7 @@ public class MovementController implements IMovementController{
 		wheel1.backward();
 		
 	}
+	
 	/*
 	public void driveBackwards(int time) {
 		wheel2.forward();
@@ -196,11 +198,7 @@ public class MovementController implements IMovementController{
 	}
 	*/
 	
-	
-	public void driveBackwards(int time, int power) {
-		wheel1.setPower(power);
-		wheel2.setPower(power);
-		
+	public void driveBackwards(int time, int power) {	
 		wheel1.forward();
 		wheel2.forward();
 		
@@ -208,7 +206,6 @@ public class MovementController implements IMovementController{
 			Delay.msDelay(time);
 		}
 	}
-	
 	
 	public void parallelPark() {
 		wheel2.stop();
@@ -221,5 +218,15 @@ public class MovementController implements IMovementController{
 	
 	public void playSound() {
 		Sound.playSample(PKMON);
+	}
+	
+	public void twerk() {
+		for(int i = 1; i < 40; i++) {
+			if((i % 2) == 0) {
+				driveBackwards(150, 100);
+			} else {
+				driveCar(120, 100);
+			}
+		}
 	}
 }

@@ -17,5 +17,6 @@ public interface IMovementController {
 	public void parallelPark();
 	public void driveBackwards(int time, int power);
 	public void playSound();
+	public void twerk();
 
 }
