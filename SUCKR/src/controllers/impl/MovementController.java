@@ -220,6 +220,6 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void playSound() {
-		Sound.playSample(PKMON);
+		Sound.playSample(PKMON, 80);
 	}
 }
