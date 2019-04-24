@@ -14,17 +14,13 @@ public class Main {
 
 	public static void movementTest() {
 		IMovementController mc = new MovementController();
-		mc.openTrunk();
-		mc.twerk();
-
-		/*
+				
 		mc.playSound();
 		for(int i = 0; i < 4; i++) {
 			mc.driveCarUntillCloseToWall(0.2f);
 			mc.turnLeft(90);
 		}
-		mc.turnLeft(100000);
-		 */
+		 
 	}
 
 	public static void gyroTest() {
@@ -40,7 +36,7 @@ public class Main {
 		IMovementController mc = ControllerRegistry.getMovementController();
 		ISensorController sc = ControllerRegistry.getSensorController();
 
-		mc.driveCar(0,100);
+		mc.driveCar(0);
 
 		while(isDriving) {
 			if(sc.getDistance() < 0.2) {
@@ -51,7 +47,7 @@ public class Main {
 				mc.stopCar();
 				isDriving = false;
 			}
-			mc.driveCar(0,100);
+			mc.driveCar(0);
 		}
 	}
 }

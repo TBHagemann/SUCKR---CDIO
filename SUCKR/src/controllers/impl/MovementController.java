@@ -9,42 +9,40 @@ import entities.sensors.Gyro;
 import entities.sensors.Ultrasonic;
 import lejos.*;
 import lejos.hardware.Sound;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.robotics.MirrorMotor;
 import lejos.utility.Delay;
 
 public class MovementController implements IMovementController{
 	
 	
-	UnregulatedMotor wheel1, wheel2, trunk, collector;	
-	ISensorController sc;
+	private EV3LargeRegulatedMotor wheel1, wheel2;
+	private EV3MediumRegulatedMotor trunk, collector;	
+	private ISensorController sc;
 	
-	File PKMON = new File("sjovtklip.wav");
+	private File PKMON = new File("sjovtklip.wav");
 
 	public MovementController(){
-		wheel1 = new UnregulatedMotor(MotorPort.B);
-		wheel2 = new UnregulatedMotor(MotorPort.C);
+		wheel1 = new EV3LargeRegulatedMotor(MotorPort.B);
+		wheel2 = new EV3LargeRegulatedMotor(MotorPort.C);
 		
-		trunk = new UnregulatedMotor(MotorPort.A);
-		collector = new UnregulatedMotor(MotorPort.D);
+		MirrorMotor.invertMotor(wheel1);
+		MirrorMotor.invertMotor(wheel2);
 		
-		//sc = ControllerRegistry.getSensorController();
+		trunk = new EV3MediumRegulatedMotor(MotorPort.A);
+		collector = new EV3MediumRegulatedMotor(MotorPort.D);
 		
-		/*
-		usensor = new EV3UltrasonicSensor(SensorPort.S3);
-		ultrasonic = new Ultrasonic(usensor.getMode("Distance"));
-		
-		gsensor = new EV3GyroSensor(SensorPort.S2);
-		gyro = new Gyro(gsensor.getMode("Angle"));
-		*/
+		sc = ControllerRegistry.getSensorController();
+	
 	}
 	
-	public void driveCar(int time, int power) {
-		wheel1.setPower(power);
-		wheel2.setPower(power);
+	public void driveCar(int time) {
 		
 		motorOn("left");
 		motorOn("right");
@@ -56,8 +54,6 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void driveCarUntillCloseToWall(float distance) {
-		wheel1.setPower(100);
-		wheel2.setPower(100);
 		motorOn("left");
 		motorOn("right");
 		
@@ -78,10 +74,10 @@ public class MovementController implements IMovementController{
 		
 		switch(motor) {
 		case "left": 
-			wheel1.backward();
+			wheel1.forward();
 			break;
 		case "right":
-			wheel2.backward();
+			wheel2.forward();
 			break;
 		}
 	}
@@ -101,7 +97,6 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void frontCollectorOn() {
-		collector.setPower(100);
 		collector.backward();
 	}
 	
@@ -110,7 +105,6 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void openTrunk() {
-		trunk.setPower(50);
 		trunk.backward();
 		Delay.msDelay(1000);	
 	}
@@ -122,21 +116,16 @@ public class MovementController implements IMovementController{
 	
 	public void turnRight(int degrees) {
 		wheel2.stop();
-		wheel1.stop();
-		
-		wheel1.setPower(100);
-		wheel2.setPower(100);
-		
+		wheel1.stop();		
 		
 		int startAngle = sc.getGyroAngle();
 		int endAngle = startAngle;
 		while(Math.abs(startAngle - endAngle) < degrees) {
 			
-			wheel1.forward();
-			wheel2.backward();
+			wheel1.backward();
+			wheel2.forward();
 			
 			endAngle = sc.getGyroAngle();		
-
 		}
 		
 		wheel1.stop();
@@ -147,16 +136,12 @@ public class MovementController implements IMovementController{
 		wheel2.stop();
 		wheel1.stop();
 		
-		wheel1.setPower(100);
-		wheel2.setPower(100);
-		
-		
 		int startAngle = sc.getGyroAngle();
 		int endAngle = startAngle;
 		while(Math.abs(startAngle - endAngle) < degrees) {
 			
-			wheel1.backward();
-			wheel2.forward();
+			wheel1.forward();
+			wheel2.backward();
 			
 			endAngle = sc.getGyroAngle();		
 		}
@@ -176,21 +161,20 @@ public class MovementController implements IMovementController{
 	public void zigZag(int degrees) {
 		wheel2.stop();
 		wheel1.stop();
-		wheel2.backward();
-		wheel1.backward();
+		wheel2.forward();
+		wheel1.forward();
 		wheel2.stop();
 		wheel1.stop();
 		wheel2.stop();
 		wheel1.stop();
-		wheel2.backward();
-		wheel1.backward();
+		wheel2.forward();
+		wheel1.forward();
 		wheel2.stop();
 		wheel1.stop();
-		wheel2.backward();
-		wheel1.backward();
+		wheel2.forward();
+		wheel1.forward();
 		
 	}
-	
 	/*
 	public void driveBackwards(int time) {
 		wheel2.forward();
@@ -198,21 +182,24 @@ public class MovementController implements IMovementController{
 	}
 	*/
 	
-	public void driveBackwards(int time, int power) {	
-		wheel1.forward();
-		wheel2.forward();
+	
+	public void driveBackwards(int time) {
+
+		wheel1.backward();
+		wheel2.backward();
 		
 		if(time != 0) {
 			Delay.msDelay(time);
 		}
 	}
 	
+	
 	public void parallelPark() {
 		wheel2.stop();
 		wheel1.stop();
-		driveCar(500, 100);
+		driveCar(500);
 		turnLeft(180);
-		driveBackwards(500, 100);
+		driveBackwards(500);
 		openTrunk();
 	}
 	
@@ -220,13 +207,16 @@ public class MovementController implements IMovementController{
 		Sound.playSample(PKMON);
 	}
 	
+	
 	public void twerk() {
 		for(int i = 1; i < 40; i++) {
 			if((i % 2) == 0) {
-				driveBackwards(150, 100);
+				driveBackwards(150);
 			} else {
-				driveCar(120, 100);
+				driveCar(120);
 			}
 		}
 	}
-}
+} 
+
+
