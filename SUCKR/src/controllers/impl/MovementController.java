@@ -1,7 +1,9 @@
 package controllers.impl;
-
+import lejos.hardware.motor.*;
 import java.io.File;
-
+import lejos.hardware.motor.*;
+import lejos.hardware.Button;
+import lejos.robotics.navigation.*;
 import controllers.ControllerRegistry;
 import controllers.interfaces.IMovementController;
 import controllers.interfaces.ISensorController;
@@ -9,6 +11,7 @@ import entities.sensors.Gyro;
 import entities.sensors.Ultrasonic;
 import lejos.*;
 import lejos.hardware.Sound;
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
@@ -25,6 +28,7 @@ public class MovementController implements IMovementController{
 	File PKMON = new File("sjovtklip.wav");
 
 	public MovementController(){
+		
 		wheel1 = new UnregulatedMotor(MotorPort.B);
 		wheel2 = new UnregulatedMotor(MotorPort.C);
 		
@@ -36,7 +40,6 @@ public class MovementController implements IMovementController{
 		/*
 		usensor = new EV3UltrasonicSensor(SensorPort.S3);
 		ultrasonic = new Ultrasonic(usensor.getMode("Distance"));
-		
 		gsensor = new EV3GyroSensor(SensorPort.S2);
 		gyro = new Gyro(gsensor.getMode("Angle"));
 		*/
@@ -222,4 +225,17 @@ public class MovementController implements IMovementController{
 	public void playSound() {
 		Sound.playSample(PKMON);
 	}
+	/*
+	//nytn req
+	public void measureMovements(double diameter, double width) {
+		diameter = DifferentialPilot.WHEEL_SIZE_EV3;
+		width = 15.2;
+		DifferentialPilot difpilot = new DifferentialPilot(diameter, width, Motor.C, Motor.B );
+		difpilot.travel(100);
+		LCD.drawString("Press ENTER", 0, 3);
+		Button.ENTER.waitForPressAndRelease();
+		difpilot.rotate(1080);
+		Motor.B.close();
+		Motor.C.close();	
+	}*/
 }
