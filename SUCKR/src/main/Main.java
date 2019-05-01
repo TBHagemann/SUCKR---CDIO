@@ -4,11 +4,17 @@ import controllers.ControllerRegistry;
 import controllers.impl.MovementController;
 import controllers.interfaces.IMovementController;
 import controllers.interfaces.ISensorController;
+import lejos.robotics.navigation.DifferentialPilot;
 public class Main {
 
 	public static void main(String[] args) {
 
-		movementTest();
+		IMovementController mc = new MovementController();
+		
+		double diameter = DifferentialPilot.WHEEL_SIZE_EV3;
+		double width = 15.2;
+		
+		mc.measureMovements(diameter, width);
 
 	}
 

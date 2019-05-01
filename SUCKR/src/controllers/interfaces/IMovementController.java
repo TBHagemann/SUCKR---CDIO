@@ -18,5 +18,6 @@ public interface IMovementController {
 	public void driveBackwards(int time, int power);
 	public void playSound();
 	public void twerk();
+	public void measureMovements(double diameter, double width);
 
 }

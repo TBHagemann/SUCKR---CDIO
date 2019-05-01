@@ -8,15 +8,19 @@ import controllers.interfaces.ISensorController;
 import entities.sensors.Gyro;
 import entities.sensors.Ultrasonic;
 import lejos.*;
+import lejos.hardware.Button;
 import lejos.hardware.Sound;
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
+import lejos.hardware.motor.Motor;
 import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.MirrorMotor;
+import lejos.robotics.navigation.DifferentialPilot;
 import lejos.utility.Delay;
 
 public class MovementController implements IMovementController{
@@ -221,6 +225,18 @@ public class MovementController implements IMovementController{
 				driveCar(120, 100);
 			}
 		}
+	}
+	
+	
+	//nytn req
+	public void measureMovements(double diameter, double width) {
+		DifferentialPilot difpilot = new DifferentialPilot(diameter, width, Motor.C, Motor.B );
+		difpilot.travel(100);
+		LCD.drawString("Press ENTER", 0, 3);
+		Button.ENTER.waitForPressAndRelease();
+		difpilot.rotate(1080);
+		Motor.B.close();
+		Motor.C.close();	
 	}
 } 
 
