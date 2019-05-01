@@ -36,7 +36,7 @@ public class Main {
 		IMovementController mc = ControllerRegistry.getMovementController();
 		ISensorController sc = ControllerRegistry.getSensorController();
 
-		mc.driveCar(0);
+		mc.driveCar(0, 100);
 
 		while(isDriving) {
 			if(sc.getDistance() < 0.2) {
@@ -47,7 +47,7 @@ public class Main {
 				mc.stopCar();
 				isDriving = false;
 			}
-			mc.driveCar(0);
+			mc.driveCar(0, 100);
 		}
 	}
 }

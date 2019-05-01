@@ -22,27 +22,26 @@ import lejos.utility.Delay;
 public class MovementController implements IMovementController{
 	
 	
-	private EV3LargeRegulatedMotor wheel1, wheel2;
-	private EV3MediumRegulatedMotor trunk, collector;	
+	private UnregulatedMotor wheel1, wheel2, trunk, collector;	
 	private ISensorController sc;
 	
 	private File PKMON = new File("sjovtklip.wav");
 
 	public MovementController(){
-		wheel1 = new EV3LargeRegulatedMotor(MotorPort.B);
-		wheel2 = new EV3LargeRegulatedMotor(MotorPort.C);
+		wheel1 = new UnregulatedMotor(MotorPort.B);
+		wheel2 = new UnregulatedMotor(MotorPort.C);
 		
-		MirrorMotor.invertMotor(wheel1);
-		MirrorMotor.invertMotor(wheel2);
-		
-		trunk = new EV3MediumRegulatedMotor(MotorPort.A);
-		collector = new EV3MediumRegulatedMotor(MotorPort.D);
+		trunk = new UnregulatedMotor(MotorPort.A);
+		collector = new UnregulatedMotor(MotorPort.D);
 		
 		sc = ControllerRegistry.getSensorController();
 	
 	}
 	
-	public void driveCar(int time) {
+	public void driveCar(int time, int power) {
+		
+		wheel1.setPower(power);
+		wheel2.setPower(power);
 		
 		motorOn("left");
 		motorOn("right");
@@ -54,6 +53,8 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void driveCarUntillCloseToWall(float distance) {
+		wheel1.setPower(100);
+		wheel2.setPower(100);
 		motorOn("left");
 		motorOn("right");
 		
@@ -74,10 +75,10 @@ public class MovementController implements IMovementController{
 		
 		switch(motor) {
 		case "left": 
-			wheel1.forward();
+			wheel1.backward();
 			break;
 		case "right":
-			wheel2.forward();
+			wheel2.backward();
 			break;
 		}
 	}
@@ -97,6 +98,7 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void frontCollectorOn() {
+		collector.setPower(100);
 		collector.backward();
 	}
 	
@@ -105,6 +107,7 @@ public class MovementController implements IMovementController{
 	}
 	
 	public void openTrunk() {
+		trunk.setPower(100);
 		trunk.backward();
 		Delay.msDelay(1000);	
 	}
@@ -117,6 +120,9 @@ public class MovementController implements IMovementController{
 	public void turnRight(int degrees) {
 		wheel2.stop();
 		wheel1.stop();		
+		
+		wheel1.setPower(100);
+		wheel2.setPower(100);
 		
 		int startAngle = sc.getGyroAngle();
 		int endAngle = startAngle;
@@ -135,6 +141,9 @@ public class MovementController implements IMovementController{
 	public void turnLeft(int degrees) {
 		wheel2.stop();
 		wheel1.stop();
+		
+		wheel1.setPower(100);
+		wheel2.setPower(100);
 		
 		int startAngle = sc.getGyroAngle();
 		int endAngle = startAngle;
@@ -161,32 +170,28 @@ public class MovementController implements IMovementController{
 	public void zigZag(int degrees) {
 		wheel2.stop();
 		wheel1.stop();
-		wheel2.forward();
-		wheel1.forward();
-		wheel2.stop();
-		wheel1.stop();
-		wheel2.stop();
-		wheel1.stop();
-		wheel2.forward();
-		wheel1.forward();
-		wheel2.stop();
-		wheel1.stop();
-		wheel2.forward();
-		wheel1.forward();
-		
-	}
-	/*
-	public void driveBackwards(int time) {
-		wheel2.forward();
-		wheel1.forward();
-	}
-	*/
-	
-	
-	public void driveBackwards(int time) {
-
-		wheel1.backward();
 		wheel2.backward();
+		wheel1.backward();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.backward();
+		wheel1.backward();
+		wheel2.stop();
+		wheel1.stop();
+		wheel2.backward();
+		wheel1.backward();
+		
+	}	
+	
+	public void driveBackwards(int time, int power) {
+
+		wheel1.setPower(power);
+		wheel2.setPower(power);
+		
+		wheel1.forward();
+		wheel2.forward();
 		
 		if(time != 0) {
 			Delay.msDelay(time);
@@ -197,9 +202,9 @@ public class MovementController implements IMovementController{
 	public void parallelPark() {
 		wheel2.stop();
 		wheel1.stop();
-		driveCar(500);
+		driveCar(500, 100);
 		turnLeft(180);
-		driveBackwards(500);
+		driveBackwards(500, 100);
 		openTrunk();
 	}
 	
@@ -211,9 +216,9 @@ public class MovementController implements IMovementController{
 	public void twerk() {
 		for(int i = 1; i < 40; i++) {
 			if((i % 2) == 0) {
-				driveBackwards(150);
+				driveBackwards(150, 100);
 			} else {
-				driveCar(120);
+				driveCar(120, 100);
 			}
 		}
 	}

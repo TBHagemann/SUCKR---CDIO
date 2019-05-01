@@ -2,7 +2,7 @@ package controllers.interfaces;
 
 public interface IMovementController {
 	
-	public void driveCar(int time);
+	public void driveCar(int time, int power);
 	public void driveCarUntillCloseToWall(float distance);
 	public void stopCar();
 	public void motorOn(String motor);
@@ -15,7 +15,7 @@ public interface IMovementController {
 	public void turnLeft(int degrees);
 	public boolean isDriving();
 	public void parallelPark();
-	public void driveBackwards(int time);
+	public void driveBackwards(int time, int power);
 	public void playSound();
 	public void twerk();
 
