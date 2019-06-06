@@ -2,7 +2,7 @@ package Algorithm;
 	
 import java.util.*;
 	
-public class Node {
+public class Node implements Comparable{
 	
 	private int number;
 	private int x;
@@ -50,6 +50,10 @@ public class Node {
 	}
 	public void addDistance(int number, int distance) {
 		distances.put(number, distance);
+	}
+	@Override
+	public int compareTo(Object compnode) {
+		return this.number - ((Node)compnode).getNumber();
 	}
 	
 }	

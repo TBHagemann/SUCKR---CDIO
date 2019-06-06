@@ -21,7 +21,7 @@ public class Algotester {
 			}
 		}
 		ArrayList<Node> nodeList = AlgorithmController.ConvertToGraph(testArray);
-		
+		/*
 		for(Node node : nodeList) {
 			System.out.println(node.getNumber());
 			System.out.println("x: " + node.getX());
@@ -33,6 +33,27 @@ public class Algotester {
 				System.out.println(entry.getValue());
 				System.out.println();
 			}
+		}
+		*/
+		ArrayList<Node> mst = AlgorithmController.convertToMST(nodeList, nodeList.get(0));
+		
+		for(Node node : mst) {
+			System.out.println(node.getNumber());
+			//System.out.println("x: " + node.getX());
+			//System.out.println("y: " + node.getY());
+			System.out.println("Neighbors");
+			//System.out.println(node.getDistances().size());
+			//System.out.println();
+			//System.out.println();
+			//System.out.println("Distances");
+			HashMap<Integer, Integer> distances = node.getDistances();
+			
+			for(Entry<Integer, Integer> entry : distances.entrySet()) {
+				System.out.println(entry.getKey());
+				//System.out.println(entry.getValue());
+				System.out.println();
+			}
+			System.out.println();
 		}
 	}
 }

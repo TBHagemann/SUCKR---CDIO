@@ -1,7 +1,9 @@
 package Algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class AlgorithmController {
 
@@ -29,11 +31,45 @@ public class AlgorithmController {
 		}
 		return nodes;
 	}
-	
+
 	//Make a minimum spanning tree using Prim's Algorithm
-	private static ArrayList<Integer> convertToMST(ArrayList<Integer> graph){
+	public static ArrayList<Node> convertToMST(ArrayList<Node> graph, Node start){
+		HashMap<Integer,Node> mst = new HashMap<Integer,Node>();
+
+		mst.put(start.getNumber(), new Node(start.getNumber(), start.getX(), start.getY()));
+		ArrayList<Integer> visited = new ArrayList<Integer>();
+		visited.add(start.getNumber());
+
+		for(int i = 0; i < graph.size()-1; i++) {
+			int curShortest = Integer.MAX_VALUE;
+			Node curShortestNode = null;
+			Node curShortestNodeFrom = null;
+			for(Node node : graph) {
+				if(visited.contains(node.getNumber())) {
+					for(Entry<Integer, Integer> entry: node.getDistances().entrySet()) {
+						if(!visited.contains(entry.getKey()) && entry.getValue() < curShortest) {
+							curShortest = entry.getValue();
+							curShortestNode = graph.get(entry.getKey());
+							curShortestNodeFrom = mst.get(node.getNumber());
+						}
+					}
+				}
+			}
+
+			Node newNode = new Node(curShortestNode.getNumber(), curShortestNode.getX(), curShortestNode.getY());
+			int distance = calculateDistance(newNode, curShortestNodeFrom);
+			newNode.addDistance(curShortestNodeFrom.getNumber(), distance);
+			curShortestNodeFrom.addDistance(newNode.getNumber(), distance);
+			mst.put(newNode.getNumber(), newNode);
+			visited.add(newNode.getNumber());
+		}
 		
-		return null;
+		ArrayList<Node> mstFinal = new ArrayList<Node>();
+		for(Entry<Integer, Node> node : mst.entrySet()) {
+			mstFinal.add(node.getValue());
+		}
+
+		return mstFinal;
 	}
 
 	//Calculates total distance (in matrix coordinates) using Pythagoras
@@ -43,11 +79,11 @@ public class AlgorithmController {
 
 		return (int) Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 	}
-	
-	
+
+
 	//Solve the travelling salemans problem in constant time
 	public static ArrayList<Integer> solveTravelingSalesmanProblemInConstantTime() {
-		
+
 		return null;
 	}
 
