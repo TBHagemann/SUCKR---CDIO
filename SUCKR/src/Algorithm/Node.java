@@ -7,13 +7,13 @@ public class Node implements Comparable{
 	private int number;
 	private int x;
 	private int y;
-	private HashMap<Integer, Integer> distances;
+	private HashMap<Integer, Double> distances;
 	
 	public Node() {
-		distances = new HashMap<Integer, Integer>();
+		distances = new HashMap<Integer, Double>();
 	}
 	public Node(int number, int x, int y) {
-		distances = new HashMap<Integer, Integer>();
+		distances = new HashMap<Integer, Double>();
 		this.x = x;
 		this.y = y;
 		this.number = number;
@@ -42,13 +42,13 @@ public class Node implements Comparable{
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	public HashMap<Integer, Integer> getDistances() {
+	public HashMap<Integer, Double> getDistances() {
 		return distances;
 	}
-	public void setDistances(HashMap<Integer, Integer> distances) {
+	public void setDistances(HashMap<Integer, Double> distances) {
 		this.distances = distances;
 	}
-	public void addDistance(int number, int distance) {
+	public void addDistance(int number, double distance) {
 		distances.put(number, distance);
 	}
 	@Override

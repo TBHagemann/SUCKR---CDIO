@@ -12,14 +12,18 @@ public class Algotester {
 		for(int i = 0; i < testArray.length; i++) {
 			for(int j = 0; j < testArray[i].length; j++) {
 				testArray[i][j] = 0;
+				
 				if(r.nextInt(200000) == 1) {
 					testArray[i][j] = 1;
 					System.out.println("Ball placed at:");
 					System.out.println("x: " + j);
 					System.out.println("y: " + i);
 				}
+				
+				
 			}
 		}
+
 		ArrayList<Node> nodeList = AlgorithmController.ConvertToGraph(testArray);
 		/*
 		for(Node node : nodeList) {
@@ -46,9 +50,9 @@ public class Algotester {
 			//System.out.println();
 			//System.out.println();
 			//System.out.println("Distances");
-			HashMap<Integer, Integer> distances = node.getDistances();
+			HashMap<Integer, Double> distances = node.getDistances();
 			
-			for(Entry<Integer, Integer> entry : distances.entrySet()) {
+			for(Entry<Integer, Double> entry : distances.entrySet()) {
 				System.out.println(entry.getKey());
 				//System.out.println(entry.getValue());
 				System.out.println();
@@ -60,6 +64,12 @@ public class Algotester {
 		for(Integer inte: order) {
 			System.out.print(inte + " ");
 		}
+		
+		Move move = AlgorithmController.calculateMove(nodeList, 0, 1);
+		System.out.println("distance " + move.getDistance());
+		System.out.println("angle " + move.getAngle());
+		
+		
 	}
 	
 	

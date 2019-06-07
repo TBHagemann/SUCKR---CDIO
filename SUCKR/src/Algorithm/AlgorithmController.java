@@ -27,7 +27,7 @@ public class AlgorithmController {
 			Node from = nodes.get(i);
 			for(int j = i+1; j < nodes.size(); j++) {
 				Node to = nodes.get(j);
-				int dist = calculateDistance(from, to);
+				double dist = calculateDistance(from, to);
 				to.addDistance(from.getNumber(), dist);
 				from.addDistance(to.getNumber(), dist);
 			}
@@ -44,12 +44,12 @@ public class AlgorithmController {
 		visited.add(start.getNumber());
 
 		for(int i = 0; i < graph.size()-1; i++) {
-			int curShortest = Integer.MAX_VALUE;
+			Double curShortest = Double.MAX_VALUE;
 			Node curShortestNode = null;
 			Node curShortestNodeFrom = null;
 			for(Node node : graph) {
 				if(visited.contains(node.getNumber())) {
-					for(Entry<Integer, Integer> entry: node.getDistances().entrySet()) {
+					for(Entry<Integer, Double> entry: node.getDistances().entrySet()) {
 						if(!visited.contains(entry.getKey()) && entry.getValue() < curShortest) {
 							curShortest = entry.getValue();
 							curShortestNode = graph.get(entry.getKey());
@@ -60,7 +60,7 @@ public class AlgorithmController {
 			}
 
 			Node newNode = new Node(curShortestNode.getNumber(), curShortestNode.getX(), curShortestNode.getY());
-			int distance = calculateDistance(newNode, curShortestNodeFrom);
+			double distance = calculateDistance(newNode, curShortestNodeFrom);
 			newNode.addDistance(curShortestNodeFrom.getNumber(), distance);
 			curShortestNodeFrom.addDistance(newNode.getNumber(), distance);
 			mst.put(newNode.getNumber(), newNode);
@@ -82,42 +82,47 @@ public class AlgorithmController {
 		}
 		
 		order.add(node.getNumber());
-		HashMap<Integer, Integer> distances = node.getDistances();
-		for(Entry<Integer, Integer> entry : distances.entrySet()) {
+		HashMap<Integer, Double> distances = node.getDistances();
+		for(Entry<Integer, Double> entry : distances.entrySet()) {
 			if(!order.contains(entry.getKey())) {
 				performDFS(graph, graph.get(entry.getKey()));
 			}
 		}
-		order.add(node.getNumber());
-
-			/*
-			stackSizeWhenWeGotToThatNode.put(cur.getNumber(), stack.size());
-			HashMap<Integer, Integer> distances = cur.getDistances();
-			for(Entry<Integer, Integer> entry : distances.entrySet()) {
-				if(!order.contains(entry.getKey())) {
-					stack.add(graph.get(entry.getKey()));
-				}
-			}
-			 */
+		//order.add(node.getNumber());
 		
-
-
-
 		return order;
+	}
+	
+	public static Move calculateMove(ArrayList<Node> graph, int fromIndex, int toIndex) {
+		Move move = new Move();
+		Node from = graph.get(fromIndex);
+		Node to = graph.get(toIndex);
+		double dist = to.getDistances().get(from.getNumber());
+		int a = Math.abs(to.getX() - from.getX());
+		int b = Math.abs(to.getY() - from.getY());
+		move.setDistance(dist);
+		double cosC = (Math.pow(a, 2) + Math.pow(dist, 2) - Math.pow(b, 2))/(2*a*dist);
+		move.setAngle(Math.toDegrees(Math.acos(cosC)));
+		
+		return move;
+	}
+	
+	public static void resetOrder(){
+		order = new ArrayList<Integer>();
 	}
 
 	//Calculates total distance (in matrix coordinates) using Pythagoras
-	private static int calculateDistance(Node from, Node to){
+	private static double calculateDistance(Node from, Node to){
 		int a = Math.abs(from.getX() - to.getX());
 		int b = Math.abs(from.getY() - to.getY());
 
-		return (int) Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+		return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 	}
 
 
 	//Solve the travelling salemans problem in constant time
 	public static ArrayList<Integer> solveTravelingSalesmanProblemInConstantTime() {
-
+		//TODO: Implement
 		return null;
 	}
 
