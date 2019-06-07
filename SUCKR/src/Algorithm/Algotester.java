@@ -55,5 +55,12 @@ public class Algotester {
 			}
 			System.out.println();
 		}
+		ArrayList<Integer> order = AlgorithmController.performDFS(mst, mst.get(0));
+		
+		for(Integer inte: order) {
+			System.out.print(inte + " ");
+		}
 	}
+	
+	
 }

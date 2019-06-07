@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Stack;
 
 public class AlgorithmController {
+
+	static public ArrayList<Integer> order;
 
 	public static ArrayList<Node> ConvertToGraph(int[][] matrix) {
 
@@ -63,13 +66,44 @@ public class AlgorithmController {
 			mst.put(newNode.getNumber(), newNode);
 			visited.add(newNode.getNumber());
 		}
-		
+
 		ArrayList<Node> mstFinal = new ArrayList<Node>();
 		for(Entry<Integer, Node> node : mst.entrySet()) {
 			mstFinal.add(node.getValue());
 		}
 
 		return mstFinal;
+	}
+
+	//Performs a DFS and returns a list holding the order in which the nodes were visited
+	public static ArrayList<Integer> performDFS(ArrayList<Node> graph, Node node){
+		if(order == null) {
+			order = new ArrayList<Integer>();
+		}
+		
+		order.add(node.getNumber());
+		HashMap<Integer, Integer> distances = node.getDistances();
+		for(Entry<Integer, Integer> entry : distances.entrySet()) {
+			if(!order.contains(entry.getKey())) {
+				performDFS(graph, graph.get(entry.getKey()));
+			}
+		}
+		order.add(node.getNumber());
+
+			/*
+			stackSizeWhenWeGotToThatNode.put(cur.getNumber(), stack.size());
+			HashMap<Integer, Integer> distances = cur.getDistances();
+			for(Entry<Integer, Integer> entry : distances.entrySet()) {
+				if(!order.contains(entry.getKey())) {
+					stack.add(graph.get(entry.getKey()));
+				}
+			}
+			 */
+		
+
+
+
+		return order;
 	}
 
 	//Calculates total distance (in matrix coordinates) using Pythagoras
